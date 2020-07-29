@@ -3,7 +3,11 @@ import React from "react"
 export const CurrencyCalculator = () => {
     return (
     <div>
-        Calculator
+       <h3>Tečajni kalkulator</h3>
     </div>
     )
+}
+
+CurrencyCalculator.propTypes = {
+    currencies: []
 }
