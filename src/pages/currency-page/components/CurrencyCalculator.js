@@ -1,9 +1,9 @@
 import React from "react"
 
-export const CurrencyTable = () => {
+export const CurrencyCalculator = () => {
     return (
     <div>
-        Table
+        Calculator
     </div>
     )
 }
