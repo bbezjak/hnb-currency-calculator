@@ -1,4 +1,5 @@
 export function calculateValueForCurrencyOfOneUnit(currency, units) {
     const pom = parseFloat(currency.replace(/,/, '.'));
-    return (pom / units).toFixed(6);
+    const value = (pom / units).toFixed(6);
+    return String(value).replace(".", ',')
 }

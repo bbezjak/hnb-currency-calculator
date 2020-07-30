@@ -12,7 +12,6 @@ export async function hnbFetch() {
 
     let retData = "hnb_ret_data";
     await fetchData(api, method).then(response => {
-        debugger;
         retData = response;
     })
 

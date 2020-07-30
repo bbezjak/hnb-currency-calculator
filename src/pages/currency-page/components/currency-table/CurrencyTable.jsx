@@ -1,4 +1,5 @@
 import React from "react"
+import {PropTypes} from 'prop-types'
 import { TableContainer, Table, TableHead, TableRow, TableCell, TableBody } from "@material-ui/core"
 
 export const CurrencyTable = (props) => {
@@ -40,5 +41,5 @@ export const CurrencyTable = (props) => {
 }
 
 CurrencyTable.propTypes = {
-    currencies: []
+  currencies: PropTypes.array.isRequired
 }

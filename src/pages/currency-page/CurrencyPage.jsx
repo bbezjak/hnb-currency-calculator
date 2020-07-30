@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react"
 import { Navbar } from "../../components";
 import { CurrencyTable, CurrencyCalculator } from "./components";
 import { hnbFetch, calculateValueForCurrencyOfOneUnit } from "./utils";
@@ -27,7 +27,6 @@ export const CurrencyPage = () => {
     fetchData().then((data) => {
       data.forEach(function(currency, index) {
         if(currency.jedinica === 100) {
-          debugger;
           data[index].kupovni_tecaj = calculateValueForCurrencyOfOneUnit(currency.kupovni_tecaj, currency.jedinica)
           data[index].srednji_tecaj = calculateValueForCurrencyOfOneUnit(currency.srednji_tecaj, currency.jedinica)
           data[index].prodajni_tecaj = calculateValueForCurrencyOfOneUnit(currency.prodajni_tecaj, currency.jedinica)
