@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect } from "react";
 import { Navbar } from "../../components";
 import { CurrencyTable, CurrencyCalculator } from "./components";
-import { hnbFetch, calculateValueForCurrencyOfOneUnit } from "./utils";
+import { hnbFetch, calculateValueForCurrencyOfHRK } from "./utils";
 
 /* {
     broj_tecajnice: "145",
@@ -23,30 +23,63 @@ export const CurrencyPage = () => {
     async function fetchData() {
       return await hnbFetch();
     }
-    
+
     fetchData().then((data) => {
-      data.forEach(function(currency, index) {
-        if(currency.jedinica === 100) {
-          data[index].kupovni_tecaj = calculateValueForCurrencyOfOneUnit(currency.kupovni_tecaj, currency.jedinica)
-          data[index].srednji_tecaj = calculateValueForCurrencyOfOneUnit(currency.srednji_tecaj, currency.jedinica)
-          data[index].prodajni_tecaj = calculateValueForCurrencyOfOneUnit(currency.prodajni_tecaj, currency.jedinica)
-          data[index].jedinica = currency.jedinica / currency.jedinica
+      const processedCurrencies = [];
+      data.forEach(function (currency, index) {
+        if (currency.jedinica === 100) {
+          data[index].kupovni_tecaj = calculateValueForCurrencyOfHRK(
+            currency.kupovni_tecaj,
+            currency.jedinica
+          );
+          data[index].srednji_tecaj = calculateValueForCurrencyOfHRK(
+            currency.srednji_tecaj,
+            currency.jedinica
+          );
+          data[index].prodajni_tecaj = calculateValueForCurrencyOfHRK(
+            currency.prodajni_tecaj,
+            currency.jedinica
+          );
+          data[index].jedinica = currency.jedinica / currency.jedinica;
         }
+        const kupovni = calculateValueForCurrencyOfHRK(
+          currency.kupovni_tecaj,
+          currency.jedinica
+        );
+        const srednji = calculateValueForCurrencyOfHRK(
+          currency.srednji_tecaj,
+          currency.jedinica
+        );
+        const prodajni = calculateValueForCurrencyOfHRK(
+          currency.prodajni_tecaj,
+          currency.jedinica
+        );
+
+        debugger;
+        processedCurrencies.push({
+          drzava: currency.drzava,
+          drzava_iso: currency.drzava_iso,
+          sifra_valute: currency.sifra_valute,
+          valuta: currency.valuta,
+          kupovni,
+          srednji,
+          prodajni,
+        });
       });
 
-      setCurrencies(data)
+      setCurrencies(processedCurrencies);
     });
   }, []);
 
   return (
     <>
       <Navbar />
-      {currencies && 
+      {currencies && (
         <>
-          <CurrencyTable currencies={currencies}/>
-          <CurrencyCalculator currencies={currencies}/>
+          <CurrencyTable currencies={currencies} />
+          <CurrencyCalculator currencies={currencies} />
         </>
-      }
+      )}
     </>
   );
 };

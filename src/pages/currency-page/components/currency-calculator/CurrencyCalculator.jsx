@@ -12,26 +12,20 @@ import { CurrencyMenu } from "./components";
 
 export const CurrencyCalculator = (props) => {
   const { currencies } = props;
-  const [map, setMap] = useState();
+  const [value, setValue] = useState(undefined);
   const [calculatedValue, setCalculatedValue] = useState();
   const [
     currencyPair,
     switchCurrencyPair,
     setForeignCurrency,
-    isHomeFirst,
+    isHomeFirst
   ] = useCurrenciesState(currencies[0].valuta);
 
   useEffect(() => {
-    const map = new Map();
-    currencies.map((currency) =>
-      map.set(currency.valuta, currency.srednji_tecaj)
-    );
-    setMap(map);
-  }, [currencies]);
-
-  const coeficient = useMemo(() => {
-    return currencyPair.first / currencyPair.second;
-  }, [currencyPair]);
+      const pom = value;
+      setValue(calculatedValue);
+      setCalculatedValue(pom);
+  }, [isHomeFirst])
 
   const transformed = useMemo(() => {
     let transformed = [];
@@ -39,9 +33,26 @@ export const CurrencyCalculator = (props) => {
     return transformed
   }, [currencies]);
 
-  const calculateValue = (event) => {
-    const value = event.target.value;
-    setCalculatedValue(value);
+  const coeficient = useMemo(() => {
+    // TODO
+    debugger;
+    
+    if(currencyPair.first === "HRK") {
+        const srednji = currencies.find(c => c.valuta === currencyPair.second).srednji;
+        return srednji;
+    } else {
+        const srednji = currencies.find(c => c.valuta === currencyPair.first).srednji;
+        return 1.0 / srednji;
+    }
+  }, [currencies, currencyPair]);
+
+  const calculateValue = (value) => {
+    debugger;
+    let calculatedValue = "";
+    if(value !== undefined ) {
+        calculatedValue = (value * coeficient).toFixed(2);
+    }
+    setCalculatedValue(calculatedValue);
   };
 
   function calculateValue2(event) {
@@ -53,8 +64,14 @@ export const CurrencyCalculator = (props) => {
     <div>
       <h3>Tečajni kalkulator</h3>
       <NumberFormat
-        onChange={(event) => calculateValue(event)}
+      value={value}
+        onValueChange={(values) =>{
+            const {formattedValue, value, floatValue} = values;
+            setValue(floatValue);
+            calculateValue(floatValue)
+        } }
         thousandSeparator={true}
+        isNumericString = {true}
       />
       {/*<NumberFormat onChange={calculateValue2} thousandSeparator={true} */}
       {isHomeFirst ? (
@@ -62,7 +79,7 @@ export const CurrencyCalculator = (props) => {
       ) : (
         <CurrencyMenu
           currencies = {transformed}
-          selectedCurrency = {currencyPair.second}
+          selectedCurrency = {currencyPair.first}
           chooseCurrency={setForeignCurrency}
         />
       )}
@@ -86,6 +103,7 @@ export const CurrencyCalculator = (props) => {
         value={calculatedValue}
         displayType={"text"}
         thousandSeparator={true}
+        isNumericString = {true}
       />
     </div>
   );

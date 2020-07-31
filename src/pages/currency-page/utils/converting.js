@@ -1,5 +1,5 @@
-export function calculateValueForCurrencyOfOneUnit(currency, units) {
+export function calculateValueForCurrencyOfHRK(currency, units) {
     const pom = parseFloat(currency.replace(/,/, '.'));
-    const value = (pom / units).toFixed(6);
-    return String(value).replace(".", ',')
+    const value = (units / pom).toFixed(6);
+    return value
 }

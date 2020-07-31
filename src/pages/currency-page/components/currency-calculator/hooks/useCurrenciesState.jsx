@@ -21,7 +21,7 @@ export const useCurrenciesState = (foreignCurrency) => {
     const isHomeFirst = useMemo(() => {
         debugger;
         return currencies.first === homeCurrency
-    }, [currencies]) 
+    }, [currencies])
 
     return [currencies, switchCurrencies, setForeignCurrency, isHomeFirst]
 }

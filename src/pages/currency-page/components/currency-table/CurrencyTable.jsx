@@ -27,10 +27,9 @@ export const CurrencyTable = (props) => {
               </TableCell>
               <TableCell align="right">{row.drzava_iso}</TableCell>
               <TableCell align="right">{row.valuta}</TableCell>
-              <TableCell align="right">{row.jedinica}</TableCell>
-              <TableCell align="right">{row.kupovni_tecaj}</TableCell>
-              <TableCell align="right">{row.srednji_tecaj}</TableCell>
-              <TableCell align="right">{row.prodajni_tecaj}</TableCell>
+              <TableCell align="right">{row.kupovni}</TableCell>
+              <TableCell align="right">{row.srednji}</TableCell>
+              <TableCell align="right">{row.prodajni}</TableCell>
             </TableRow>
           ))}
         </TableBody>
