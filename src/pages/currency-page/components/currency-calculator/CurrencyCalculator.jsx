@@ -1,8 +1,12 @@
 import React, { useEffect, useState, useMemo } from "react";
 import NumberFormat from "react-number-format";
 import { PropTypes } from "prop-types";
-import { CurrencyChooserToggler } from "./components/";
 import { useCurrenciesState } from "./hooks/useCurrenciesState";
+
+import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
+import Button from "@material-ui/core/Button";
+
+import { CurrencyMenu } from "./components";
 
 // https://github.com/s-yadav/react-number-format
 
@@ -14,11 +18,8 @@ export const CurrencyCalculator = (props) => {
     currencyPair,
     switchCurrencyPair,
     setForeignCurrency,
-  ] = useCurrenciesState(undefined);
-
-  const coeficient = useMemo(() => {
-    return currencyPair.first / currencyPair.second;
-  }, [currencyPair]);
+    isHomeFirst,
+  ] = useCurrenciesState(currencies[0].valuta);
 
   useEffect(() => {
     const map = new Map();
@@ -28,8 +29,18 @@ export const CurrencyCalculator = (props) => {
     setMap(map);
   }, [currencies]);
 
+  const coeficient = useMemo(() => {
+    return currencyPair.first / currencyPair.second;
+  }, [currencyPair]);
+
+  const transformed = useMemo(() => {
+    let transformed = [];
+    currencies.map((currency) => transformed.push(currency.valuta));
+    return transformed
+  }, [currencies]);
+
   const calculateValue = (event) => {
-    const value = event.target.value
+    const value = event.target.value;
     setCalculatedValue(value);
   };
 
@@ -46,11 +57,31 @@ export const CurrencyCalculator = (props) => {
         thousandSeparator={true}
       />
       {/*<NumberFormat onChange={calculateValue2} thousandSeparator={true} */}
-      <CurrencyChooserToggler
-        currencies={currencies}
-        toggleCurrency={() => switchCurrencyPair()}
-        switchCurrencyPair={() => setForeignCurrency()}
-      />
+      {isHomeFirst ? (
+        <span>HRK</span>
+      ) : (
+        <CurrencyMenu
+          currencies = {transformed}
+          selectedCurrency = {currencyPair.second}
+          chooseCurrency={setForeignCurrency}
+        />
+      )}
+      <Button
+        aria-controls="simple-menu"
+        aria-haspopup="true"
+        onClick={switchCurrencyPair}
+      >
+        <ArrowForwardIcon />
+      </Button>
+      {isHomeFirst ? (
+        <CurrencyMenu
+          currencies = {transformed}
+          selectedCurrency = {currencyPair.second}
+          chooseCurrency={setForeignCurrency}
+        />
+      ) : (
+        <span>HRK</span>
+      )}
       <NumberFormat
         value={calculatedValue}
         displayType={"text"}

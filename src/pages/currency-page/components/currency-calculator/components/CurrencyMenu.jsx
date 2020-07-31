@@ -7,16 +7,18 @@ import MenuItem from "@material-ui/core/MenuItem";
 import { PropTypes } from "prop-types";
 
 export const CurrencyMenu = (props) => {
-  const [currencies, setCurrencies] = React.useState([]);
+  const { currencies, selectedCurrency, chooseCurrency } = props;
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const [selectedIndex, setSelectedIndex] = React.useState(1);
 
   const handleClickListItem = (event) => {
+    debugger;
+    chooseCurrency(event.currentTarget);
     setAnchorEl(event.currentTarget);
   };
 
-  const handleMenuItemClick = (event, index) => {
-    setSelectedIndex(index);
+  const handleMenuItemClick = (event) => {
+    debugger;
+    chooseCurrency(event.currentTarget.innerText);
     setAnchorEl(null);
   };
 
@@ -31,7 +33,7 @@ export const CurrencyMenu = (props) => {
         aria-haspopup="true"
         onClick={(event) => setAnchorEl(event.currentTarget)}
       >
-        {currencies[0]}
+        {selectedCurrency}
       </Button>
       <Menu
         anchorEl={anchorEl}
@@ -42,8 +44,8 @@ export const CurrencyMenu = (props) => {
         {currencies.map((currency, index) => (
           <MenuItem
             key={currency}
-            disabled={index === 0}
-            selected={index === selectedIndex}
+            disabled={currency === selectedCurrency}
+            selected={currency === selectedCurrency}
             onClick={(event) => handleMenuItemClick(event, index)}
           >
             {currency}
@@ -55,5 +57,7 @@ export const CurrencyMenu = (props) => {
 };
 
 CurrencyMenu.propTypes = {
-    chooseCurrency: PropTypes.func.isRequired
-  };
+  currencies: PropTypes.array.isRequired,
+  selectedCurrency: PropTypes.string.isRequired,
+  chooseCurrency: PropTypes.func.isRequired,
+};
