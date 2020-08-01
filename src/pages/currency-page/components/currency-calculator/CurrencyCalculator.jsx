@@ -20,12 +20,12 @@ export const CurrencyCalculator = (props) => {
     setForeignCurrency,
     isHomeFirst
   ] = useCurrenciesState(currencies[0].valuta);
-
+  
   useEffect(() => {
-      const pom = value;
-      setValue(calculatedValue);
-      setCalculatedValue(pom);
-  }, [isHomeFirst])
+    const pom = value;
+    setValue(calculatedValue);
+    setCalculatedValue(pom);
+}, [isHomeFirst])
 
   const transformed = useMemo(() => {
     let transformed = [];
@@ -34,9 +34,6 @@ export const CurrencyCalculator = (props) => {
   }, [currencies]);
 
   const coeficient = useMemo(() => {
-    // TODO
-    debugger;
-    
     if(currencyPair.first === "HRK") {
         const srednji = currencies.find(c => c.valuta === currencyPair.second).srednji;
         return srednji;
@@ -45,6 +42,10 @@ export const CurrencyCalculator = (props) => {
         return 1.0 / srednji;
     }
   }, [currencies, currencyPair]);
+
+  useEffect(() => {
+    calculateValue(value)
+}, [coeficient])
 
   const calculateValue = (value) => {
     debugger;
