@@ -72,7 +72,7 @@ export const CurrencyCalculator = (props) => {
   }
 
   return (
-    <div>
+    <div style={{margin : "0 10px"}}>
       <h3>Tečajni kalkulator</h3>
       <NumberFormat
         value={value}
