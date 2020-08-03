@@ -19,3 +19,41 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 export const auth = firebase.auth();
 export const firestore = firebase.firestore();
+
+export const addUserData = (userData) => {
+  firestore
+    .collection("users")
+    .doc(userData.email)
+    .set({
+      firstName: userData.firstName,
+      lastName: userData.lastName,
+    })
+    .then(function (docRef) {
+      console.log("Document written with ID: ", docRef.id);
+    })
+    .catch(function (error) {
+      console.error("Error adding document: ", error);
+    });
+};
+
+export const getUserData = async (id) => {
+  var docRef = firestore.collection("users").doc(id);
+
+  let data = undefined;
+  await docRef
+    .get()
+    .then(function (doc) {
+      if (doc.exists) {
+        data = doc;
+        console.log("Document data:", doc.data());
+      } else {
+        // doc.data() will be undefined in this case
+        console.log("No such document!");
+      }
+    })
+    .catch(function (error) {
+      console.log("Error getting document:", error);
+    });
+
+    return data;
+};
