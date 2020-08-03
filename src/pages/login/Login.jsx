@@ -9,9 +9,10 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-import { auth, firestore } from "../../firebase";
+import { auth } from "../../firebase";
 import { withRouter, Redirect } from "react-router-dom";
 import { UserContext } from "../../providers/UserProvider";
+import Alert from '@material-ui/lab/Alert';
 
 // https://github.com/mui-org/material-ui/blob/master/docs/src/pages/getting-started/templates/sign-in/SignIn.js
 
@@ -55,22 +56,21 @@ const LoginPage = ({ history }) => {
     }
   };
 
-  const handleLogIn =
-    async (event) => {
-      debugger;
-      event.preventDefault();
+  const handleLogIn = async (event) => {
+    debugger;
+    event.preventDefault();
+    setError(null);
 
-      await auth
-        .signInWithEmailAndPassword(email, password)
-        .then((res) => {
-            debugger;
-            history.push("/");
-          })
-          .catch((catchedError) => {
-            debugger;
-            setError(catchedError);
-          });
-    };
+    await auth
+      .signInWithEmailAndPassword(email, password)
+      .then((res) => {
+        debugger;
+      })
+      .catch((catchedError) => {
+        debugger;
+        setError(catchedError.message);
+      });
+  };
 
   if (user) {
     return <Redirect to="/" />;
@@ -129,6 +129,7 @@ const LoginPage = ({ history }) => {
             </Grid>
           </Grid>
         </form>
+      {error && <Alert severity="error">{error}</Alert>}
       </div>
     </Container>
   );

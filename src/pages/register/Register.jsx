@@ -10,7 +10,8 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { withRouter } from "react-router-dom";
-import { auth } from "../../firebase";
+import { auth, addUserData } from "../../firebase";
+import Alert from '@material-ui/lab/Alert';
 
 // https://github.com/mui-org/material-ui/blob/master/docs/src/pages/getting-started/templates/sign-up/SignUp.js
 
@@ -61,16 +62,18 @@ const RegisterPage = ({ history }) => {
     async (event) => {
       debugger;
       event.preventDefault();
+      setError(null);
 
       await auth
         .createUserWithEmailAndPassword(email, password)
         .then((res) => {
-          debugger;
-          history.push("/");
+          const userData = {"firstName" : firstName, "lastName": lastName, "email": email}
+          addUserData(userData);
+          history.push("/")
         })
         .catch((catchedError) => {
           debugger;
-          setError(catchedError);
+          setError(catchedError.message);
         });
     };
 
@@ -155,6 +158,7 @@ const RegisterPage = ({ history }) => {
             </Grid>
           </Grid>
         </form>
+        {error && <Alert severity="error">{error}</Alert>}
       </div>
     </Container>
   );

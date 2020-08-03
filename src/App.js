@@ -11,20 +11,19 @@ function App() {
   return (
     <UserProvider>
       <BrowserRouter>
-      <Switch>
-        <PrivateRoute exact path="/">
-          <CurrencyPage />
-        </PrivateRoute>
+        <Switch>
         <Route exact path="/login">
           <Login />
         </Route>
         <Route exact path="/register">
-          <Register/>
+          <Register />
         </Route>
-      </Switch>
-    </BrowserRouter>
+        <PrivateRoute exact path="/">
+          <CurrencyPage />
+        </PrivateRoute>
+        </Switch>
+      </BrowserRouter>
     </UserProvider>
-    
   );
 }
 

@@ -12,11 +12,12 @@ export const CurrencyTable = (props) => {
       <Table size="small" aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell>Dessert (100g serving)</TableCell>
-            <TableCell align="right">Calories</TableCell>
-            <TableCell align="right">Fat&nbsp;(g)</TableCell>
-            <TableCell align="right">Carbs&nbsp;(g)</TableCell>
-            <TableCell align="right">Protein&nbsp;(g)</TableCell>
+            <TableCell align="left">Država</TableCell>
+            <TableCell align="right">Šifra države</TableCell>
+            <TableCell align="right">Šifra valute</TableCell>
+            <TableCell align="right">1 KN (kupovni)</TableCell>
+            <TableCell align="right">1 KN (srednji)</TableCell>
+            <TableCell align="right">1 KN (prodajni)</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
