@@ -14,7 +14,7 @@ export const Navbar = () => {
     <div>
       <UserDataDialog open={dialogOpen} onClose={() => setDialogOpen(false)} />
       <AppBar position="static">
-        <Toolbar style={{display: "flex", "justify-content": "space-between"}}>
+        <Toolbar style={{display: "flex", "justifyContent": "space-between"}}>
         <Typography variant="h5" color="inherit" align="justify">
               HNB tečaj
             </Typography>

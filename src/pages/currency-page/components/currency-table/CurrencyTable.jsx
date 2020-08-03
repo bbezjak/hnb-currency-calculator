@@ -28,7 +28,7 @@ export const CurrencyTable = (props) => {
           </TableHead>
           <TableBody>
             {currencies.map((row) => (
-              <TableRow key={row.name}>
+              <TableRow key={row.drzava_iso + "_" + row.valuta}>
                 <TableCell component="th" scope="row">
                   {row.drzava}
                 </TableCell>

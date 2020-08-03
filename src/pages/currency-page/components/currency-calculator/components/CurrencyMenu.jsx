@@ -10,12 +10,6 @@ export const CurrencyMenu = (props) => {
   const { currencies, selectedCurrency, chooseCurrency } = props;
   const [anchorEl, setAnchorEl] = React.useState(null);
 
-  const handleClickListItem = (event) => {
-    debugger;
-    chooseCurrency(event.currentTarget);
-    setAnchorEl(event.currentTarget);
-  };
-
   const handleMenuItemClick = (event) => {
     debugger;
     chooseCurrency(event.currentTarget.innerText);
